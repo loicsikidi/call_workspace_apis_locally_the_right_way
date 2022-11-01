@@ -65,7 +65,7 @@ gcloud iam service-accounts add-iam-policy-binding "${SA_TO_IMPERSONATE}" \
 --role='roles/iam.serviceAccountTokenCreator'
 
 # Enforce impersonation in ADC
-# -> you need to reauthenticate indicating the SA to impersone in order to propagate the information
+# -> you need to reauthenticate indicating the SA to impersonate in order to propagate the information
 gcloud auth application-default login --impersonate-service-account=$SA_TO_IMPERSONATE
 
 python main.py
