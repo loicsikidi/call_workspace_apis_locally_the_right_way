@@ -59,17 +59,23 @@ In order to work you will have to:
 ```bash
 export SA_TO_IMPERSONATE="demo-auth-workspace-apis@${PROJECT}.iam.gserviceaccount.com"
 
-# Role allowing to impersonnate the targeted SA
+# Grant you to permission to impersonnate the targeted SA
 gcloud iam service-accounts add-iam-policy-binding "${SA_TO_IMPERSONATE}" \
 --member="user:$(gcloud auth list --filter=status=active --format='value(account)')" \
 --role='roles/iam.serviceAccountTokenCreator'
+
+# Enforce impersonation in ADC
+# -> you need to reauthenticate indicating the SA to impersone in order to propagate the information
+gcloud auth application-default login --impersonate-service-account=$SA_TO_IMPERSONATE
 
 python main.py
 ```
 
 Now, normally the script should work 🚀!
 
-*Note: if not please create an [issue](https://github.com/LoicSikidi/call_workspace_apis_locally_the_right_way/issues)*
+***Note**: if not please create an [issue](https://github.com/LoicSikidi/call_workspace_apis_locally_the_right_way/issues)*
+
+The beauty is that you don't need to update the codebase. Here the power of ADC 💪💪💪. 
 
 ### Cleanup
 
